@@ -11,7 +11,19 @@ let randomNum = 0
 let resultArea = document.getElementById("result-area")
 let userValue = document.getElementById("user-value")
 let playButton = document.getElementById("play-button")
+let chanceArea = document.getElementById("chance-area")
+let resetButton = document.getElementById("reset-button")
+let starArea = document.getElementById("star-area")
+let imgArea = document.getElementById("img-area")
+let chanceCnt = 5
+let gameOver = false
+let history = []
+let gameWon = false
 playButton.addEventListener("click", play)
+resetButton.addEventListener("click", reset)
+userValue.addEventListener("focus", function(){
+    userValue.value = ""})
+updateStars()
 
 function generateRandomNum(){
     randomNum = Math.floor(Math.random()*100)+1;
@@ -21,14 +33,64 @@ generateRandomNum()
 
 function play(){
     let userInput = userValue.value;
-    console.log(userInput)
+    if(userInput > 100 || userInput<1){
+        resultArea.textContent = "Input number between 1 and 100!";
+        return;
+    }
+    if(history.includes(userInput)){
+        resultArea.textContent = `You already tried ${userInput}`;
+        return;
+    }
     if(userInput < randomNum){
         console.log("up")
-        resultArea.textContent = "Up!!"
+        resultArea.textContent = "Up!! Koopa has stolen a star!!"
+        imgArea.src = "koopa_gains_star.jpg"
+        chanceCnt --;
+        starArea.src = updateStars()
+        history.push(userInput)
+        chanceArea.textContent = `Stars left: ${chanceCnt}`
     }else if(userInput > randomNum){
         console.log("down")
-        resultArea.textContent = "Down!!"
+        resultArea.textContent = "Down!! Koopa has stolen a star!!"
+        imgArea.src = "koopa_gains_star.jpg"
+        chanceCnt --;
+        starArea.src = updateStars()
+        history.push(userInput)
+        chanceArea.textContent = `Stars left: ${chanceCnt}`
     }else{
-        resultArea.textContent = "Correct!!"
+        resultArea.textContent = "Correct!! Koopa has been defeated"
+        imgArea.src = "mario_win.jpg"
+        gameOver = true
+        gameWon = true
+    }
+    if(chanceCnt<1){
+        gameOver = true
+    }
+    if(gameOver === true && gameWon === false){
+        resultArea.textContent = "Koopa stole 5 stars!! Mario has been defeated"
+        playButton.disabled = true
+        imgArea.src = "koopa_win.jpg"
+    }
+}
+
+function reset(){
+    userValue.value = ""
+    imgArea.src = "https://pbs.twimg.com/media/E4eJSVNUYAEiM9t?format=jpg&name=4096x4096"
+    generateRandomNum();
+    resultArea.textContent = "Mario will be defeated if Koopa steals 5 stars!"
+    chanceCnt = 5
+    chanceArea.textContent = `Stars left: ${chanceCnt}`
+    gameOver = false
+    playButton.disabled = false
+    history = []
+    updateStars()
+    return;
+}
+
+function updateStars() {
+    const starsContainer = document.getElementById('star-area');
+    starsContainer.innerHTML = ''; // 이전 하트들을 지움
+    for (let i = 0; i < chanceCnt; i++) {
+        starsContainer.insertAdjacentHTML("beforeend", `<img src = "mario_star.png" class = "star-size" >`)
     }
 }
