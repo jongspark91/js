@@ -1,0 +1,88 @@
+let names = [
+    "Steven Paul Jobs",
+    "Bill Gates",
+    "Mark Elliot Zuckerberg",
+    "Elon Musk",
+    "Jeff Bezos",
+    "Warren Edward Buffet",
+    "Larry Page",
+    "Larry Ellison",
+    "Tim Cook",
+    "Lloyd Blankfein"
+]
+//map 문제
+
+// 모든 이름을 대문자로 바꾸어 출력
+let nameUpper = names.map((item)=>{return item.toUpperCase()})
+console.log(nameUpper)
+
+// 성을 제외한 이름만 출력
+let lastNames = names.map((item)=>{
+    return item.split(" ")[0]
+})
+console.log(lastNames)
+
+//이름의 이니셜만 출력
+let namesInitial = names.map((item)=>{
+    let initials = ""
+    for(i=0;i<item.split(" ").length;i++){
+        initials += item.split(" ")[i][0]
+    }
+    return initials
+}
+)
+console.log(namesInitial)
+
+// filter 문제
+// 이름에 a를 포함한 사람들을 출력하시오.
+let namesA = names.filter((item)=>{
+    return item.includes("a")
+})
+console.log(namesA)
+
+//이름에 같은 글자가 연속해서 들어간 사람들을 출력하시오
+let consecutiveNames = names.filter((item)=>{
+    let splitName = item.split("")
+    return splitName.some((letter,index)=> letter == splitName[index+1])
+})
+console.log("Consecutive Names:", consecutiveNames)
+
+// some 문제
+// 전체 이름의 길이가 20자 이상인 사람이 있는가?
+let overTwenty = names.some(names => names.length>=20)
+console.log(overTwenty)
+
+//성을 제외한 이름에 p를 포함한 사람이 있는가?
+let pFirstname = names.some((item)=>{
+    splitName = item.split(" ")
+    splitName.pop() // 성만 날려주기
+    return splitName.some(eachName=>eachName.toLocaleLowerCase().includes("p"))
+})
+console.log(pFirstname)
+
+// every 문제
+// 모두의 전체 이름의 길이가 20자 이상인가?
+let allTwenty = names.every(names=> names.length >= 20)
+console.log(allTwenty)
+
+// 모두의 전체 이름에 a가 포함되어있는가?
+let allA = names.every(names => names.includes("a"))
+console.log(allA)
+
+// find문제
+// 전체 이름의 길이가 20자 이상인 사람을 찾으시오
+let findOverTwenty = names.find(names => names.length>=20)
+console.log(findOverTwenty)
+
+//미들네임이 포함되어 있는 사람을 찾으시오
+let findMiddleName = names.find(names => names.split(" ").length > 2)
+console.log(findMiddleName)
+
+// findIndex문제
+// 전체 이림의 길이가 20자 이상인 사람의 인데스 번호를 찾으시오
+let findIdx = names.findIndex(names=> names.length >= 20)
+console.log(findIdx)
+
+// 미들네임이 포함되어있는 사람의 인덱스 번호를 찾으시오
+let findMiddleIdx = names.findIndex(names => names.split(" ").length > 2)
+console.log(findMiddleIdx)

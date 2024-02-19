@@ -1,11 +1,18 @@
-let bill_list = [50000,10000,5000,1000,500,100,10,5,1]
 
-function get_least_change(money){
-    for(let i = 0; i<bill_list.length; i++){
-        let quotient = Math.floor(money/bill_list[i])
-        console.log(bill_list[i]," X ", quotient)
-        money = money - (bill_list[i]*quotient)
-    }
-}
-
-get_least_change(1243)
+let names = [
+    "Steven Paul Jobs",
+    "Bill Gates",
+    "Mark Elliot Zuckerberg",
+    "Elon Musk",
+    "Jeff Bezos",
+    "Warren Edward Buffet",
+    "Larry Page",
+    "Larry Ellison",
+    "Tim Cook",
+    "Lloyd Blankfein"
+]
+console.log(names.some((item)=>{
+    let splitName = item.split(' ')
+    splitName.pop()
+    return splitName.some(eachName=>eachName.toLocaleLowerCase().includes("p"))
+  }))
